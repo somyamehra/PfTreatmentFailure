@@ -131,7 +131,9 @@ PfRecur_fpr_default <- PfRecur_fpr %>% as.data.frame %>%
   subset(omega==OMEGA_DEFAULT & epsilon==EPSILON_DEFAULT) %>%
   select(Site, iter, FPR) %>% mutate(model="PfRecur")
 
-Plucinski_fpr <- PfRecur_permuted_data %>% group_by(Site, iter) %>% 
+Plucinski_fpr <- PfRecur_permuted_data %>% 
+  select(Site, iter, `Day 0`, `Day Failure`, Plucinski) %>% unique %>% 
+  group_by(Site, iter) %>% 
   summarise(FPR=mean(Plucinski)) %>% mutate(model="CDC") %>% as.data.frame
 
 fpr_summary_plot <- bind_rows(PfRecur_fpr_default, match_counting_fpr, Plucinski_fpr) %>% 

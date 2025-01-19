@@ -36,6 +36,7 @@ expected_prop_IBS <- function(MOI, card) {
                ((1:(MOI-card+1))/MOI)^2))
 }
 
+
 # ============================ PARSE GENOTYPES ============================
 
 Angola_2021 <- bind_rows(read_xlsx("Dimbu_Angola_TES_genotypes.xlsx", skip=3),
