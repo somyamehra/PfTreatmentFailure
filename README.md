@@ -1,4 +1,4 @@
-This repository collates code and data to accompany the manuscript **Probabilistic classification of late treatment failure in uncomplicated malaria** by Mehra et al, 2025.
+This repository collates code and data to accompany the manuscript **Probabilistic classification of late treatment failure in uncomplicated malaria** by Mehra et al, 2025. This is available as a preprint on medRxiv: https://www.medrxiv.org/content/10.1101/2025.01.21.25320790v1.
 
 The results rely in part on our classification framework *PfRecur*, which has been implemented as an R package, openly available in a GitHub repository: https://github.com/somyamehra/PfRecur. Code and data derived from external sources are highlighted below.
 
@@ -17,4 +17,3 @@ Dimbu PR, Labuda S, Ferreira CM, Caquece F, André K, Pembele G, Pode D, João M
 Plucinski MM, Morton L, Bushman M, Dimbu PR, Udhayakumar V. Robust algorithm for systematic classification of malaria late treatment failures as recrudescence or reinfection using microsatellite genotyping. Antimicrobial Agents and Chemotherapy. 2015 Oct;59(10):6096-10. Available at <https://journals.asm.org/doi/full/10.1128/aac.00072-15>
 
 Plucinski M. *AngolaTES2021*. GitHub. 2024. <https://github.com/MateuszPlucinski/AngolaTES2021>
-
