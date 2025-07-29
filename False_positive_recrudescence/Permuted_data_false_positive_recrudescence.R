@@ -156,6 +156,11 @@ png("false_positive_recrudescence_summary.png", height=2.5, width=8, units = "in
 show(fpr_summary_plot)
 dev.off()
 
+pdf("false_positive_recrudescence_summary.pdf", height=2.5, width=8)
+show(fpr_summary_plot)
+dev.off()
+
+
 
 fpr_summary_plot_extended <- bind_rows(PfRecur_fpr %>% subset(epsilon==EPSILON_DEFAULT) %>% 
                                 transmute(Site=Site, iter=iter, FPR=FPR, model=paste0("PfRecur\n(ω=", omega, ")")), 

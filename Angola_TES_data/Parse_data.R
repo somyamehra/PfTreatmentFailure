@@ -178,32 +178,16 @@ diversity_plot <- Angola_2021_data %>%
                       "(where A is the locus cardinality)")) + 
   theme_bw() + theme(strip.text = element_text(size=11),
                      legend.position = "none",
-                     plot.caption = element_text(size=10.25, face="italic", hjust=0.5))
+                     plot.caption = element_text(size=10.25, hjust=0.5))
 
 MOI_covariates <- merge(Angola_2021_data, Angola_2021_clin_metadata) %>% 
   mutate(Fever=ifelse(Temperature>=37.5, "Temperature>=37.5", "Temperature<37.5"),
          Type=ifelse(Timepoint=="D0", "Baseline", "Recurrent")) %>% 
-  subset(!is.na(Fever) & Parasitemia>0)
-
-JT_fever <- 
-  PMCMRplus::jonckheereTest(x=subset(MOI_covariates$MOI, MOI_covariates$Temperature>=37.5), 
-                            g=subset(log10(MOI_covariates$Parasitemia), MOI_covariates$Temperature>=37.5), 
-                            alternative = 'greater')
-
-JT_no_fever <- 
-  PMCMRplus::jonckheereTest(x=subset(MOI_covariates$MOI, MOI_covariates$Temperature<37.5), 
-                            g=subset(log10(MOI_covariates$Parasitemia), MOI_covariates$Temperature<37.5), 
-                            alternative = 'less')
+  subset(Parasitemia>0)
 
 JT_overall <- 
   PMCMRplus::jonckheereTest(x=MOI_covariates$MOI, g=log10(MOI_covariates$Parasitemia), 
                             alternative = 'less')
-
-JT_p_vals <- data.frame(Fever=c("Temperature<37.5", "Temperature>=37.5"), 
-                        JT=c(paste0("Jonckheere-Terpstra test for decreasing trend: p=", 
-                                    format(JT_no_fever[["p.value"]], digits=3, type="e")), 
-                             paste0("Jonckheere-Terpstra test for increasing trend: p=", 
-                                    format(JT_fever[["p.value"]], digits=3, type="e"))))
 
 MOI_covariates_plot <- ggplot() + 
   geom_boxplot(data=MOI_covariates, aes(x=Parasitemia, y=MOI, group=MOI), 
@@ -212,7 +196,7 @@ MOI_covariates_plot <- ggplot() +
               width=0, height=0.25, size=1.8, stroke=0.6) + 
   annotate("label", x=10^mean(log10(range(MOI_covariates$Parasitemia))), y=5.8,
            label=paste0("Jonckheere-Terpstra test for decreasing trend: p=", 
-                        format(JT_overall[["p.value"]], digits=3, type="e"))) +
+                        format(JT_overall[["p.value"]], digits=4, type="e"))) +
   scale_x_continuous(trans="log10") + scale_y_continuous(breaks=1:5) +
   scale_color_manual(values=c("#008080", "#6A5ACD")) +
   xlab("Parasitemia (parasites per μL)") +

@@ -426,6 +426,11 @@ png("Dimbu_Angola_summary.png", width=7, height=8, units="in", res=200)
 show(summary_plot)
 dev.off()
 
+pdf("Dimbu_Angola_summary.pdf", width=7, height=8)
+show(summary_plot)
+dev.off()
+
+
 # ============================ DIFFERENT PREDICTIONS ============================
 
 highlight_isolates <- 

@@ -239,4 +239,10 @@ plot_grid(anticonservative_plot, NULL, conservative_plot, nrow=1,
           rel_widths = c(1, 0.025, 1), labels=c("(A)", "", "(B)"))
 dev.off()
 
+pdf("Simulation_results.pdf", height=9, width=9)
+plot_grid(anticonservative_plot, NULL, conservative_plot, nrow=1, 
+          rel_widths = c(1, 0.025, 1), labels=c("(A)", "", "(B)"))
+dev.off()
+
+
 
