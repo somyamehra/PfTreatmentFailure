@@ -157,7 +157,6 @@ simulate_data <- function(n_marker, marker_cardinality, partition_prob,
         PfRecur::evaluate_posterior("R", paste0("B", pair), paste0("B", setdiff(1:n_baseline, pair)),
                                     genotype_matrix, delta, omega, beta=1)
       
-
       return(c(pair=pair, n_recrudescent=n_recrudescent, 
                recurrent_MOI=recurrent_MOI,
                baseline_MOI=baseline_MOI[pair],
@@ -167,9 +166,10 @@ simulate_data <- function(n_marker, marker_cardinality, partition_prob,
                M2=as.numeric(posterior[["metrics"]][1, "M2"])))
     }
     
-    classification_summary <- mclapply(which(baseline_obs_MOI>0), function(pair) {
-      lapply(1:max_MOI, function(x) {
-        lapply(0:min(x, baseline_obs_MOI[pair]), recurrence_summary, x, pair) %>%
+    classification_summary <- lapply(which(baseline_obs_MOI>0), function(pair) {
+      mclapply(1:max_MOI, function(x) {
+        lapply(0:min(x, baseline_MOI[pair]), recurrence_summary, x, pair) %>%
+        #lapply(0:min(x, baseline_obs_MOI[pair]), recurrence_summary, x, pair) %>%
           Filter(function(x) !is.null(x), .) %>% do.call(rbind, .)}) %>% 
         do.call(rbind, .) %>% as.data.frame}) %>% bind_rows()
     

@@ -47,7 +47,7 @@ MARKER_SET_NAMES <- c("7NMS"="All markers", "Exc_TA109"="Excluding TA109")
 MARKER_SET_NAMES_long <- c("7NMS"="Classification\nbased on all 7 markers", 
                            "Exc_TA109"="Classification\nexcluding TA109")
 
-RUN_ALL <- FALSE
+RUN_ALL <- TRUE
 
 Plucinski_classifications <- read_rds("../Plucinski_et_al_model/Full_dataset/Plucinski_classifications.rds")
 
@@ -212,9 +212,9 @@ lapply(names(free_param_sens), function(x) {
 
 # ============================ SENSITIVE TO OMEGA ============================
 
-omega_sens <- c("LL21-061", "ZL21-233", "LL21-010", "ZQ21-085", "LL21-077", "BD21-053", # stronger dependence  
-                "ZQ21-103", "ZL21-245", #flips when zero vs nonzero
-                 "ZL21-203", "ZL21-269", "ZL21-304", "LL21-054", "ZL21-260") #clear recrudescence but diff mixtures
+omega_sens <- c("LL21-061", "ZL21-233", "ZQ21-085", "LL21-094", "BD21-053", "ZL21-260", "ZL21-289", "LL21-077", # stronger dependence  
+                "ZQ21-103", "ZL21-245", "LL21-010", #flips when zero vs nonzero
+                "ZL21-269", "ZL21-304", "LL21-054", "ZL21-203") #clear recrudescence but diff mixtures
 
 omega_sens_plots <- lapply(omega_sens, function(i) {
 
@@ -273,30 +273,46 @@ my_title_3 <- title <- ggdraw() +
   draw_label("(C) Resolution of mixtures sensitive to per-clone marker-wise probability of detection",
              fontface = 'bold.italic', x = 0.5, hjust = 0.5, size=19) 
 
-my_plots_1 <- plot_grid(my_title_1, plot_grid(plotlist=omega_sens_plots[1:6], 
-                                              ncol=1, labels=paste0("(A", 1:2, ")")), 
+my_plots_1a <- plot_grid(my_title_1, plot_grid(plotlist=omega_sens_plots[1:4], 
+                                              ncol=1, labels=paste0("(A", 1:4, ")")), 
                         ncol=1, rel_heights = c(0.025, 1.2))
 
-my_plots_2 <- plot_grid(my_title_2, plot_grid(plotlist=omega_sens_plots[7:8], 
-                                              ncol=1, labels=paste0("(B", 1:2, ")")), 
+my_plots_1b <- plot_grid(my_title_1, plot_grid(plotlist=omega_sens_plots[5:8], 
+                                              ncol=1, labels=paste0("(A", 5:8, ")")), 
+                        ncol=1, rel_heights = c(0.025, 1.2))
+
+
+my_plots_2 <- plot_grid(my_title_2, plot_grid(plotlist=omega_sens_plots[9:11], 
+                                              ncol=1, labels=paste0("(B", 1:3, ")")), 
                         ncol=1, rel_heights = c(0.025, 0.4))
 
-my_plots_3 <- plot_grid(my_title_3, plot_grid(plotlist=omega_sens_plots[9:12], 
+my_plots_3 <- plot_grid(my_title_3, plot_grid(plotlist=omega_sens_plots[12:15], 
                                               ncol=1, labels=paste0("(C", 1:4, ")")), 
                         ncol=1, rel_heights = c(0.025, 0.8))
 
-png("Dimbu_Angola_latent_baseline_1.png", width=16, height=21, units="in", res=180)
-show(my_plots_1)
+
+png("Dimbu_Angola_latent_baseline_1a.png", width=16, height=14, units="in", res=180)
+show(my_plots_1a)
 dev.off()
 
-png("Dimbu_Angola_latent_baseline_2.png", width=16, height=21, units="in", res=180)
-show(plot_grid(my_plots_2, my_plots_3, ncol=1, rel_heights = c(1, 2)))
+png("Dimbu_Angola_latent_baseline_1b.png", width=16, height=14, units="in", res=180)
+show(my_plots_1b)
+dev.off()
+
+png("Dimbu_Angola_latent_baseline_2a.png", width=16, height=10.5, units="in", res=180)
+#show(plot_grid(my_plots_2, my_plots_3, ncol=1, rel_heights = c(3, 4)))
+show(my_plots_2)
+dev.off()
+
+png("Dimbu_Angola_latent_baseline_2b.png", width=16, height=14, units="in", res=180)
+show(my_plots_3)
 dev.off()
 
 
 # ============================ SENSITIVE TO EPSILON ============================
 
-epsilon_sens <- c("ZL21-260", "ZQ21-085", "ZL21-233", "LL21-061", "BD21-053")
+epsilon_sens <- c("ZL21-260", "ZQ21-085", "ZL21-233", "LL21-061", "BD21-053",
+                  "ZL21-227", "ZQ21-031", "LL21-077", "LL21-094", "LL21-086")
 
 epsilon_sens_plots <- lapply(epsilon_sens, function(i) {
   
@@ -349,12 +365,21 @@ my_title <- title <- ggdraw() +
   draw_label("Classification sensitive to genotyping error",
              fontface = 'bold.italic', x = 0.5, hjust = 0.5, size=19) 
 
-my_plots <- plot_grid(my_title, plot_grid(plotlist=epsilon_sens_plots, 
+my_plots_1 <- plot_grid(my_title, plot_grid(plotlist=epsilon_sens_plots[1:5], 
                                             ncol=1, labels=paste0("(A", 1:5, ")")), 
                         ncol=1, rel_heights = c(0.025, 1))
 
-png("Dimbu_Angola_genotyping_error.png", width=16, height=17.5, units="in", res=180)
-show(my_plots)
+my_plots_2 <- plot_grid(my_title, plot_grid(plotlist=epsilon_sens_plots[6:10], 
+                                            ncol=1, labels=paste0("(A", 6:10, ")")), 
+                        ncol=1, rel_heights = c(0.025, 1))
+
+
+png("Dimbu_Angola_genotyping_error_1.png", width=16, height=17.5, units="in", res=180)
+show(my_plots_1)
+dev.off()
+
+png("Dimbu_Angola_genotyping_error_2.png", width=16, height=17.5, units="in", res=180)
+show(my_plots_2)
 dev.off()
 
 # ============================ MODEL COMPARISON ===============================

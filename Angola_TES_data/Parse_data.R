@@ -196,7 +196,7 @@ MOI_covariates_plot <- ggplot() +
               width=0, height=0.25, size=1.8, stroke=0.6) + 
   annotate("label", x=10^mean(log10(range(MOI_covariates$Parasitemia))), y=5.8,
            label=paste0("Jonckheere-Terpstra test for decreasing trend: p=", 
-                        format(JT_overall[["p.value"]], digits=4, type="e"))) +
+                        format(JT_overall[["p.value"]], digits=1, type="e"))) +
   scale_x_continuous(trans="log10") + scale_y_continuous(breaks=1:5) +
   scale_color_manual(values=c("#008080", "#6A5ACD")) +
   xlab("Parasitemia (parasites per μL)") +

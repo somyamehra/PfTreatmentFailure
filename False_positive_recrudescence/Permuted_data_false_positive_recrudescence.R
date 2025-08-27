@@ -105,7 +105,7 @@ classify_pair <- function(i) {
 if (!file.exists("Dimbu_Angola_permuted_classifications.rds")) {
   PfRecur_permuted_data <-
     mclapply(1:nrow(permuted_isolates), classify_pair,
-             mc.cores = N_CORES, mc.preschedule = TRUE, mc.set.seed = TRUE) %>% 
+            mc.cores = N_CORES, mc.preschedule = TRUE, mc.set.seed = TRUE) %>% 
     bind_rows() %>% mutate(epsilon=EPSILON_DEFAULT) %>% 
     extract(New_Code, "Site", "([A-Za-z ]+)_.")
   write_rds(PfRecur_permuted_data, "Dimbu_Angola_permuted_classifications.rds", compress = "gz")
@@ -147,7 +147,7 @@ fpr_summary_plot <- bind_rows(PfRecur_fpr_default, match_counting_fpr, Plucinski
   geom_errorbar(aes(ymin=LCI, ymax=UCI), width=0.55, col="#737373") + 
   geom_errorbar(aes(ymin=LCI2, ymax=UCI2), width=0.3, lwd=0.65) + 
   facet_grid(cols=vars(Site)) +
-  scale_y_continuous(breaks=seq(0, 0.3, 0.02)) +
+  scale_y_continuous(breaks=seq(0, 0.3, 0.05)) +
   xlab("Classification method") +
   ylab("False positive\nrecrudescence rate") +
   theme_bw() + theme(panel.grid.major.x = element_blank())
@@ -175,7 +175,7 @@ fpr_summary_plot_extended <- bind_rows(PfRecur_fpr %>% subset(epsilon==EPSILON_D
   geom_errorbar(aes(ymin=LCI, ymax=UCI), width=0.55, col="#737373") + 
   geom_errorbar(aes(ymin=LCI2, ymax=UCI2), width=0.3, lwd=0.65) + 
   facet_grid(rows=vars(Site), scale="free_y") +
-  scale_y_continuous(breaks=seq(0, 0.3, 0.02)) +
+  scale_y_continuous(breaks=seq(0, 0.3, 0.05)) +
   xlab("Classification method") +
   ylab("False positive recrudescence rate") +
   theme_bw() + theme(panel.grid.major.x = element_blank())

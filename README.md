@@ -1,6 +1,6 @@
 This repository collates code and data to accompany the manuscript **Probabilistic classification of late treatment failure in uncomplicated malaria** by Mehra et al, 2025. This is available as a preprint on medRxiv: https://www.medrxiv.org/content/10.1101/2025.01.21.25320790v1.
 
-The results rely in part on our classification framework *PfRecur*, which has been implemented as an R package, openly available in a GitHub repository: https://github.com/somyamehra/PfRecur. Code and data derived from external sources are highlighted below.
+The results rely in part on our classification framework *PfRecur* (v2), which has been implemented as an R package, openly available in a GitHub repository: https://github.com/somyamehra/PfRecur. Code and data derived from external sources are highlighted below.
 
 The directory structure is as follows:
 * *Angola_TES_data*: this contains data from a recent therapeutic efficacy study conducted in Angola in 2021, published in [Dimbu et al (2024)](https://journals.asm.org/doi/full/10.1128/aac.01525-23); genotypic data (*Dimbu_Angola_TES_genotypes.xlsx*) have been retrieved from an accompanying [GitHub repository](https://github.com/MateuszPlucinski/AngolaTES2021), while clinical metadata (*Dimbu_Angola_TES_metadata.xlsx*) are taken from Supplemental Table S4 of Dimbu et al (2024).
