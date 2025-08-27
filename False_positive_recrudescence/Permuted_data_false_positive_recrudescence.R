@@ -115,13 +115,11 @@ if (!file.exists("Dimbu_Angola_permuted_classifications.rds")) {
 
 match_counting_fpr <- permuted_isolates %>% subset(n_comparable==7) %>%
   extract(New_Code, "Site", "([A-Za-z ]+)_.") %>% 
-  group_by(Site, iter, n_match) %>% summarise(count=n()) %>% split(f=.$Site~.$iter) %>% 
-  lapply(function(x) {x <- x %>% arrange(-n_match); x$prop <- x$count/sum(x$count); 
-  x$ecdf=cumsum(x$prop); return(x)}) %>% bind_rows() %>% 
-  subset(n_match<=5 & n_match>3) %>%
-  bind_rows(data.frame(Site="Lunda Sul", iter=unique(permuted_isolates$iter),
-                       n_match=5, count=0, prop=0, ecdf=0)) %>%
-  transmute(Site=Site, iter=iter, FPR=ecdf, model=paste0("≥", n_match, "/7"))
+  group_by(Site, iter) %>%
+  summarise(match_4=mean(n_match>=4), match_5=mean(n_match>=5)) %>%
+  reshape2::melt(id=c("Site", "iter")) %>%
+  rename(FPR=value, model=variable) %>%
+  mutate(model=paste0("≥", gsub("match_", "", model), "/7"))
 
 PfRecur_fpr <- PfRecur_permuted_data %>% 
   group_by(Site, omega, epsilon, iter) %>% 
@@ -141,7 +139,7 @@ fpr_summary_plot <- bind_rows(PfRecur_fpr_default, match_counting_fpr, Plucinski
   summarise(median=median(FPR), 
             LCI=quantile(FPR, 0.025), UCI=quantile(FPR, 0.975),
             LCI2=quantile(FPR, 0.25), UCI2=quantile(FPR, 0.75)) %>% 
-  mutate(model=factor(model, levels=c("PfRecur", "CDC", "≥4/7", "≥5/7"))) %>% 
+  mutate(model=factor(model, levels=c("PfRecur", "CDC", "≥3/7", "≥4/7", "≥5/7"))) %>% 
   ggplot(aes(x=model, y=median)) + 
   geom_point(cex=2) +
   geom_errorbar(aes(ymin=LCI, ymax=UCI), width=0.55, col="#737373") + 
